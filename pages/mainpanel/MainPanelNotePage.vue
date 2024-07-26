@@ -56,13 +56,14 @@ import EditorJS, {OutputData} from "@editorjs/editorjs";
 //import 'regenerator-runtime/runtime'
 import Analytics from "src/core/utils/google-analytics";
 
-import EditorJsConfig from "src/notes/utils/EditorJsConfig";
+import EditorJsConfig from "src/notes/editorjs/EditorJsConfig";
 
-import './editorjs/linkTool.css';
+import '../../editorjs/linkTool.css';
 import {v5 as uuidv5} from "uuid";
 import {useTabsetsStore} from "src/tabsets/stores/tabsetsStore";
 import {Note, NoteType} from "src/notes/models/Note";
 import {useNotesStore} from "src/notes/stores/NotesStore";
+import {useSettingsStore} from "stores/settingsStore";
 
 const {formatDate, sendMsg, sanitize} = useUtils()
 
@@ -122,12 +123,13 @@ watchEffect(async () => {
         initialHash.value = uuidv5(json, 'da42d8e8-2afd-446f-b72e-8b437aa03e46')
         console.log("initialHash", initialHash.value)
         if (!editorJS2) {
+          console.log("hier", useSettingsStore().isEnabled('localMode'))
           // @ts-ignore
           editorJS2 = new EditorJS({
             holder: "editorjs",
             readOnly: !editMode.value,
             data: (n.content || {}) as OutputData,
-            tools: EditorJsConfig.toolsconfig
+            tools:  useSettingsStore().isEnabled('localMode') ? EditorJsConfig.toolsconfigLocal : EditorJsConfig.toolsconfig
           });
         } else {
           if (editorJS2 && editorJS2.readOnly) {
@@ -149,13 +151,14 @@ watchEffect(async () => {
     console.log("new Note")
 
     if (!editorJS2) { // && !editorJS2.isReady) {
+      console.log("hier2", useSettingsStore().isEnabled('localMode'))
       // @ts-ignore
       editorJS2 = new EditorJS({
         holder: "editorjs",
         autofocus: true,
         readOnly: false,
         data: {} as OutputData,
-        tools: EditorJsConfig.toolsconfig
+        tools:  useSettingsStore().isEnabled('localMode') ? EditorJsConfig.toolsconfigLocal : EditorJsConfig.toolsconfig
       });
     }
   }
