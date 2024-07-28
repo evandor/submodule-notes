@@ -1,17 +1,27 @@
 import Persistence from "src/core/persistence/Persistence";
 import {Note} from "src/notes/models/Note";
 
-interface NotesPersistence extends Persistence {
+abstract class NotesPersistence implements Persistence {
 
-  getNote(noteId: string): Promise<Note>
+  getServiceName(): string {
+    return this.constructor.name
+  }
 
-  getNotesForSourceId(sourceId: string): Promise<Note[]>
+  abstract init(): Promise<any>
 
-  deleteNote(noteId: string): Promise<void>
+  abstract getNote(noteId: string): Promise<Note>
 
-  saveNote(Note: Note): Promise<any>
+  abstract getNotesForSourceId(sourceId: string): Promise<Note[]>
 
-  getNotes(): Promise<Note[]>
+  abstract deleteNote(noteId: string): Promise<void>
+
+  abstract saveNote(Note: Note): Promise<any>
+
+  abstract getNotes(): Promise<Note[]>
+
+  compactDb(): Promise<any> {
+    return Promise.resolve("noOp");
+  }
 
 }
 

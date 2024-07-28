@@ -2,15 +2,11 @@ import {IDBPDatabase, openDB} from "idb";
 import NotesPersistence from "src/notes/persistence/NotesPersistence";
 import {Note} from "src/notes/models/Note";
 
-class IndexedDbNotesPersistence implements NotesPersistence {
+class IndexedDbNotesPersistence extends NotesPersistence {
 
   private STORE_IDENT = 'notes';
 
   private db: IDBPDatabase = null as unknown as IDBPDatabase
-
-  getServiceName(): string {
-    return this.constructor.name
-  }
 
   async init() {
     this.db = await this.initDatabase()

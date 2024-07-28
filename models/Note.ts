@@ -6,6 +6,7 @@ export enum NoteType {
 
 export class Note {
   created: number
+  sharedById: string | undefined = undefined
 
   constructor(
     public id: string,
