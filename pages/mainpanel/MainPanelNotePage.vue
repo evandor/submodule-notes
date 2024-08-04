@@ -52,6 +52,7 @@ import {useRoute, useRouter} from "vue-router";
 import {uid, useMeta} from "quasar";
 import {useUtils} from "src/core/services/Utils";
 import {Tabset} from "src/tabsets/models/Tabset";
+//@ts-ignore
 import EditorJS, {OutputData} from "@editorjs/editorjs";
 //import 'regenerator-runtime/runtime'
 import Analytics from "src/core/utils/google-analytics";
@@ -59,6 +60,7 @@ import Analytics from "src/core/utils/google-analytics";
 import EditorJsConfig from "src/notes/editorjs/EditorJsConfig";
 
 import '../../editorjs/linkTool.css';
+//@ts-ignore
 import {v5 as uuidv5} from "uuid";
 import {useTabsetsStore} from "src/tabsets/stores/tabsetsStore";
 import {Note, NoteType} from "src/notes/models/Note";

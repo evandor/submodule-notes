@@ -19,6 +19,7 @@ import Alert from "editorjs-alert";
 // @ts-ignore
 import ColorPlugin from "editorjs-text-color-plugin";
 
+// @ts-ignore
 import EditorJS from "@editorjs/editorjs";
 import {LinkTool2} from "src/notes/editorjs/linkTool"
 

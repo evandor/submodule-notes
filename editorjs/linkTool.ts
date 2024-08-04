@@ -1,3 +1,4 @@
+//@ts-nocheck
 import {IconLink} from '@codexteam/icons';
 
 function getMetaDataFor(doc: Document, ident: string, defaultValue = '') {
