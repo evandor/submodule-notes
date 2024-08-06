@@ -24,39 +24,11 @@ import EditorJS from "@editorjs/editorjs";
 import {LinkTool2} from "src/notes/editorjs/linkTool"
 
 // @ts-ignore
-import {SimpleImage} from "src/notes/editorjs/blocktools/simple-image/simple-image"
 import FirebaseServices from "src/services/firebase/FirebaseServices";
-import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {useAuthStore} from "stores/authStore";
 import {uid} from "quasar";
-import {useSettingsStore} from "stores/settingsStore";
 
 class EditorJsConfig {
-
-  private imageConfig = {
-    class: ImageTool,
-    config: {
-      uploader: {
-        // https://stackoverflow.com/questions/63610441/how-to-upload-image-to-firebase-storage-for-editor-js
-        async uploadByFile(file: any) {
-          console.log("got file", file)
-          const storageRef = ref(FirebaseServices.getStorage(), `users/${useAuthStore().user.uid}/notes/images/${uid()}`);
-          const sn = await uploadBytes(storageRef, file)
-          const downloadUrl = await getDownloadURL(sn.ref)
-          console.log("Uploaded successfully!", sn, downloadUrl);
-          return {
-            success: 1,
-            file: {
-              url: downloadUrl
-            }
-          }
-        },
-
-        uploadByUrl(url: string) {
-        }
-      }
-    }
-  }
 
   column_tools = {
     header: Header,
@@ -110,7 +82,6 @@ class EditorJsConfig {
         tools: this.column_tools
       }
     },
-    image: this.imageConfig,
     //      alert: Alert,
     Color: {
       class: ColorPlugin, // if load from CDN, please try: window.ColorPlugin
