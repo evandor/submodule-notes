@@ -19,9 +19,20 @@ import Alert from "editorjs-alert";
 // @ts-ignore
 import ColorPlugin from "editorjs-text-color-plugin";
 
+// @ts-ignore - almost no features
+import CodeTool from '@editorjs/code';
+
+// does not support read-only mode
+// import CodeBox from '@bomdi/codebox';
+
 // @ts-ignore
 import EditorJS from "@editorjs/editorjs";
 import {LinkTool2} from "src/notes/editorjs/linkTool"
+
+// @ts-ignore
+import editorjsCodecup from '@calumk/editorjs-codecup';
+
+import InlineCode from '@editorjs/inline-code';
 
 // @ts-ignore
 import {SimpleImage} from "src/notes/editorjs/blocktools/simple-image/simple-image"
@@ -29,7 +40,6 @@ import FirebaseServices from "src/services/firebase/FirebaseServices";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {useAuthStore} from "stores/authStore";
 import {uid} from "quasar";
-import {useSettingsStore} from "stores/settingsStore";
 
 class EditorJsConfig {
 
@@ -136,6 +146,11 @@ class EditorJsConfig {
     //     placeholder: 'Paste image URL'
     //   }
     // }
+    code : editorjsCodecup,
+    inlineCode: {
+      class: InlineCode,
+      // shortcut: 'CMD+SHIFT+M',
+    },
   }
 }
 
