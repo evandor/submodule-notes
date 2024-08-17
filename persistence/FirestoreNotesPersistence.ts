@@ -3,7 +3,6 @@ import {Note} from "src/notes/models/Note";
 import {collection, doc, getDoc, getDocs, query, setDoc, where, deleteDoc} from "firebase/firestore";
 import FirebaseServices from "src/services/firebase/FirebaseServices";
 import {useAuthStore} from "stores/authStore";
-import {BlobMetadata} from "src/snapshots/models/BlobMetadata";
 
 const STORE_IDENT = 'notes';
 
