@@ -32,6 +32,7 @@ import {LinkTool2} from "src/notes/editorjs/linkTool"
 // @ts-ignore
 import editorjsCodecup from '@calumk/editorjs-codecup';
 
+// @ts-ignore
 import InlineCode from '@editorjs/inline-code';
 
 // @ts-ignore
