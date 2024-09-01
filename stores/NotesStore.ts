@@ -1,8 +1,6 @@
 import {defineStore} from 'pinia';
-import SnapshotsPersistence from "src/snapshots/persistence/SnapshotsPersistence";
 import {ref} from "vue";
 import {BlobMetadata, BlobType} from "src/snapshots/models/BlobMetadata";
-import {Annotation} from "src/snapshots/models/Annotation";
 import NotesPersistence from "src/notes/persistence/NotesPersistence";
 import {Note} from "src/notes/models/Note";
 
@@ -27,7 +25,10 @@ export const useNotesStore = defineStore('notes', () => {
   }
 
   async function getNotesFor(sourceId: string) {
-    return storage.getNotesForSourceId(sourceId)
+    if (storage) {
+      return storage.getNotesForSourceId(sourceId)
+    }
+    return Promise.resolve([])
   }
 
   async function getNote(noteId: string) {
