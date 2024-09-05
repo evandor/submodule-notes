@@ -67,7 +67,7 @@ import {Note, NoteType} from "src/notes/models/Note";
 import {useNotesStore} from "src/notes/stores/NotesStore";
 import {useSettingsStore} from "stores/settingsStore";
 
-const {formatDate, sendMsg, sanitize} = useUtils()
+const {sendMsg, sanitize} = useUtils()
 
 const route = useRoute()
 const router = useRouter()
@@ -145,10 +145,6 @@ watchEffect(async () => {
       })
 
 
-    const tabObject = useTabsetsStore().getTabAndTabsetId(noteId.value)
-    //.then((tabObject: TabAndTabsetId | undefined) => {
-
-    //   })
   } else {
     console.log("new Note")
 

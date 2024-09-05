@@ -1,14 +1,11 @@
 import {defineStore} from 'pinia';
 import {ref} from "vue";
-import {BlobMetadata, BlobType} from "src/snapshots/models/BlobMetadata";
 import NotesPersistence from "src/notes/persistence/NotesPersistence";
 import {Note} from "src/notes/models/Note";
 
 export const useNotesStore = defineStore('notes', () => {
 
   let storage: NotesPersistence = null as unknown as NotesPersistence
-
-  const metadata = ref<BlobMetadata[]>([])
 
   const lastUpdate = ref(0)
 
