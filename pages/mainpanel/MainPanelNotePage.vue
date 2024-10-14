@@ -1,10 +1,12 @@
 <template>
+  <!-- MainPanelNotePage -->
   <q-page style="padding-top: 50px">
 
     <div class="row">
       <div class="col-2 q-mt-lg">
 
-        <Draggable v-if="treeData" class="mtl-tree q-pl-md" v-model="treeData" treeLine :tree-line-offset="0">
+        <Draggable v-if="treeData"
+                   class="mtl-tree q-pl-md" v-model="treeData" treeLine :tree-line-offset="0">
           <template #default="{ node, stat }">
             <OpenIcon
               v-if="stat.children.length"
@@ -19,21 +21,20 @@
       </div>
       <div class="col-8">
         <div class="editorx_body">
-          <div v-if="editMode">
-            <q-input type="text"
-                     @keyup="(v:any) => keyUpEvent()"
-                     class="text-h6 q-ml-lg" borderless v-model="title" placeholder="title..." autofocus/>
-          </div>
-          <div class="text-h6 q-ml-lg" v-else>
-            {{ notebook?.title }}
-          </div>
           <!-- https://medium.com/code4mk-org/editorjs-vue-a78110c3fff8 -->
           <div id="editorjs" ref="editorJsRef" @keyup="v => keyUpEvent()"/>
         </div>
         <div>
-          <q-btn v-if="dirty" label="save" @click="saveWork()"/>
-          <q-btn v-if="!dirty" label="new Subpage" @click="newSubPage()"/>
-          <q-btn label="Delete this page" @click="deletePage()"/>
+          <Transition
+            appear
+            enter-active-class="animated fadeIn slower delay-5s"
+            leave-active-class="animated fadeOut">
+            <div>
+              <q-btn v-if="dirty" label="save" class="q-mr-sm q-px-sm" dense @click="saveWork()"/>
+              <q-btn v-if="!dirty" label="new Subpage" class="q-mr-sm q-px-sm" dense @click="newSubPage()"/>
+              <q-btn label="Delete this page" class="q-mr-sm q-mx-sm" dense @click="deletePage()"/>
+            </div>
+          </Transition>
         </div>
 
         <ul>
@@ -104,7 +105,6 @@ const subNoteId = ref<string | undefined>(route.params.subNoteId as unknown as s
 const subNote = ref<NotesPage | undefined>(undefined)
 
 const editMode = ref(true)
-const closeOnSave = ref(false)
 const title = ref('')
 const editorJsRef = ref(null)
 const dirty = ref(false)
@@ -142,20 +142,6 @@ function executeOnSubPage(
   }
   console.log("not found")
   return undefined
-}
-
-function addSubNote(newSubNote: NotesPage, parent: Notebook | undefined = notebook.value): boolean {
-  debugger
-  // if (newSubNote.sourceId === parent.id) {
-  //   parent.subNotes.push(newSubNote)
-  //   return true
-  // }
-  // for (const sn of notebook.pages) {
-  //   if (addSubNote(newSubNote, sn)) {
-  //     return true
-  //   }
-  // }
-  return false
 }
 
 watchEffect(async () => {
@@ -222,14 +208,7 @@ console.log("route.params.noteId as unknown as string", route.params.noteId as u
 loadNotebookAndPage(notebookId.value!, subNoteId.value)
 
 watchEffect(async () => {
-//  closeOnSave.value = route.query.closeOnSave ? route.query.edit === "true" : false
-
-  if (notebookId.value) {
-    console.log("got noteId", notebookId.value)
-
-
-    //   })
-  } else {
+  if (!notebookId.value) {
     console.log("new Note")
 
     if (!editorJS2) { // && !editorJS2.isReady) {
@@ -256,7 +235,12 @@ const newPage = async () => {
 
 const newSubPage = async () => {
   executeOnSubPage(subNote.value?.id, (parent: Notebook | NotesPage, p: NotesPage) => {
-    p.subPages.push(new NotesPage(uid(), "subpage"))
+    p.subPages.push(new NotesPage(uid(), "subpage", {
+      blocks: [{
+        "data": {"text": "subpage", "level": 5},
+        "type": "header"
+      }]
+    }))
     return p
   })
   await useNotesStore().saveNotebook(notebook.value!)
@@ -279,7 +263,11 @@ const saveWork = async () => {
   const subpage = executeOnSubPage(subNote.value?.id, (parent: Notebook | NotesPage, p: NotesPage) => p)
   if (subpage) {
     subpage.content = outputData
-    subpage.title = sanitize(title.value)
+    if (subpage.content && subpage.content.blocks.length > 0) {
+      if (subpage.content.blocks[0].type === "header") {
+        subpage.title = sanitize(subpage.content.blocks[0].data.text)
+      }
+    }
   }
 
   //console.log("setting original", title.value, sanitize(title.value))
@@ -318,12 +306,6 @@ const openSubNote = (n: { text: string, id: string, url: string, children: objec
     //editorJS2.data = newContent
     title.value = subNote.value.title
     editorJS2.render(newContent)
-    // editorJS2 = new EditorJS({
-    //   holder: "editorjs",
-    //   readOnly: !editMode.value,
-    //   data: newContent,
-    //   tools: useSettingsStore().isEnabled('localMode') ? EditorJsConfig.toolsconfigLocal : EditorJsConfig.toolsconfig
-    // })
   }
 }
 
@@ -337,7 +319,11 @@ const getSubNote = (snId: string | undefined): NotesPage | undefined => {
 }
 
 const setNotebookTitle = (newTitle: string) => {
-  console.log("title", newTitle)
+  if (notebook.value) {
+    notebook.value.title = sanitize(newTitle)
+    useNotesStore().saveNotebook(notebook.value)
+    sendMsg('note-changed', {notebookId: notebookId.value, tabsetId: notebook.value.sourceId})
+  }
 }
 
 </script>

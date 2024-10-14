@@ -16,7 +16,12 @@ export class CreateNotebookCommand implements Command<string> {
 
   async execute(): Promise<ExecutionResult<string>> {
     const newNotebook = new Notebook(uid(), this.tabset.id, NotebookType.TABSET, "Notes for " + this.tabset.name);
-    const firstNote = new NotesPage(uid(), "first page")
+    const firstNote = new NotesPage(uid(), "new note", {
+      blocks: [{
+        "data": {"text": "new note", "level": 5},
+        "type": "header"
+      }]
+    })
     newNotebook.subPages.push(firstNote)
     await useNotesStore().saveNotebook(newNotebook)
     //sendMsg('note-changed', {})

@@ -36,7 +36,7 @@ class IndexedDbNotesPersistence extends NotesPersistence {
     return this.db.delete(this.STORE_IDENT, noteId)
   }
 
-  getNotebook(notebookId: string): Promise<NotesPage> {
+  getNotebook(notebookId: string): Promise<Notebook> {
     if (this.db) {
       return this.db.get(this.STORE_IDENT, notebookId)
     }
