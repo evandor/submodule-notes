@@ -37,9 +37,9 @@
           </Transition>
         </div>
 
-        <ul>
-          <li v-for="p of notebook?.subPages">{{ p }}</li>
-        </ul>
+<!--        <ul>-->
+<!--          <li v-for="p of notebook?.subPages">{{ p }}</li>-->
+<!--        </ul>-->
       </div>
       <div class="col-2">
 
