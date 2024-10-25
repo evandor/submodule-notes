@@ -28,7 +28,7 @@ function treeNodeFromNote(n: NotesPage) {
   return {
     text: n.title,
     url: chrome.runtime.getURL(`/www/index.html#/mainpanel/notes/${n.id}`),
-    children: _.map(n.subNotes, (subNote: NotesPage) => {
+    children: _.map(n.subPages, (subNote: NotesPage) => {
       return treeNodeFromNote(subNote)
     })
   }

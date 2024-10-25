@@ -1,5 +1,4 @@
 import sanitize from "sanitize-html";
-import {OutputData} from "@editorjs/editorjs";
 import {NotesPage} from "src/notes/models/NotesPage";
 
 export enum NotebookType {

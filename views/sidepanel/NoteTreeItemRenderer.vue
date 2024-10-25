@@ -1,6 +1,6 @@
 <template>
   <div @click.stop="clicked()">
-    <span>{{item.name}}</span>
+    <span>...</span>
   </div>
 </template>
 
@@ -8,11 +8,11 @@
 
 // const props = defineProps(['item', 'depth', 'expanded'])
 
-const props = defineProps({
-  item: {type:Object, required: true},
-  depth: {type:Number, required: true},
-  expanded: {type:Boolean, default: true}
-})
+// const props = defineProps({
+//   item: {type:Object, required: true},
+//   depth: {type:Number, required: true},
+//   expanded: {type:Boolean, default: true}
+// })
 
 const clicked = () => {
   console.log("clicked")

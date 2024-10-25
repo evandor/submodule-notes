@@ -1,7 +1,6 @@
 import {defineStore} from 'pinia';
 import {ref} from "vue";
 import NotesPersistence from "src/notes/persistence/NotesPersistence";
-import {NotesPage} from "src/notes/models/NotesPage";
 import {Notebook} from "src/notes/models/Notebook";
 
 export const useNotesStore = defineStore('notes', () => {

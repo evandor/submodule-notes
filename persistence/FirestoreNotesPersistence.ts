@@ -1,8 +1,9 @@
 import NotesPersistence from "src/notes/persistence/NotesPersistence";
-import {Note} from "src/notes/models/Note";
-import {collection, doc, getDoc, getDocs, query, setDoc, where, deleteDoc} from "firebase/firestore";
+import {collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, where} from "firebase/firestore";
 import FirebaseServices from "src/services/firebase/FirebaseServices";
 import {useAuthStore} from "stores/authStore";
+import {Notebook} from "src/notes/models/Notebook.ts";
+import {NotesPage} from "src/notes/models/NotesPage.ts";
 
 const STORE_IDENT = 'notes';
 
@@ -21,29 +22,30 @@ class FirestoreNotesPersistence extends NotesPersistence {
     return deleteDoc(noteDoc(noteId))
   }
 
-  async getNote(noteId: string): Promise<Note> {
-    const note = await getDoc(noteDoc(noteId))
-    return note.data() as Note
+  async getNotebook(notebookId: string): Promise<Notebook> {
+    const note = await getDoc(noteDoc(notebookId))
+    return note.data() as Notebook
   }
 
-  getNotes(): Promise<Note[]> {
+  getNotes(): Promise<NotesPage[]> {
     return Promise.resolve([]);
   }
 
-  async getNotesForSourceId(sourceId: string): Promise<Note[]> {
-    const res: Note[] = []
+  async getNotesForSourceId(sourceId: string): Promise<NotesPage[]> {
+    const res: NotesPage[] = []
     const cr = collection(FirebaseServices.getFirestore(), "users", useAuthStore().user?.uid || 'x', STORE_IDENT)
     const r = query(cr, where("sourceId", "==", sourceId))
     const querySnapshot = await getDocs(r);
     querySnapshot.forEach((doc) => {
-      let newItem = doc.data() as Note
-      res.push(newItem)
+      //let newItem = doc.data() as Notebook
+      console.warn("not yet impelmented")
+      //res.push(newItem)
     });
     return res
   }
 
-  async saveNote(note: Note): Promise<any> {
-    await setDoc(noteDoc(note.id), JSON.parse(JSON.stringify(note)))
+  async saveNotebook(notebook: Notebook): Promise<any> {
+    await setDoc(noteDoc(notebook.id), JSON.parse(JSON.stringify(notebook)))
   }
 
 }
