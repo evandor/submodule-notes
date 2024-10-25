@@ -1,10 +1,12 @@
 import sanitize from "sanitize-html";
+import {OutputData} from "@editorjs/editorjs";
+import {NotesPage} from "src/notes/models/NotesPage";
 
-export enum NoteType {
+export enum NotebookType {
   TABSET = "TABSET"
 }
 
-export class Note {
+export class Notebook {
   created: number
   sharedById: string | undefined = undefined
   sharedId: string | undefined = undefined
@@ -12,9 +14,9 @@ export class Note {
   constructor(
     public id: string,
     public sourceId: string,
-    public type: NoteType,
+    public type: NotebookType,
     public title: string,
-    public content: string
+    public subPages: NotesPage[] = []
   ) {
     this.created = new Date().getTime()
     this.title = sanitize(title)

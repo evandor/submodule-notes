@@ -1,7 +1,8 @@
 import {defineStore} from 'pinia';
 import {ref} from "vue";
 import NotesPersistence from "src/notes/persistence/NotesPersistence";
-import {Note} from "src/notes/models/Note";
+import {NotesPage} from "src/notes/models/NotesPage";
+import {Notebook} from "src/notes/models/Notebook";
 
 export const useNotesStore = defineStore('notes', () => {
 
@@ -17,8 +18,8 @@ export const useNotesStore = defineStore('notes', () => {
     console.debug(" ...initialized notes: Store",'✅')
   }
 
-  async function saveNote(note: Note) {
-    return storage.saveNote(note)
+  async function saveNotebook(notebook: Notebook) {
+    return storage.saveNotebook(notebook)
   }
 
   async function getNotesFor(sourceId: string) {
@@ -28,8 +29,8 @@ export const useNotesStore = defineStore('notes', () => {
     return Promise.resolve([])
   }
 
-  async function getNote(noteId: string) {
-    return storage.getNote(noteId)
+  async function getNotebook(notebookId: string) {
+    return storage.getNotebook(notebookId)
   }
 
   async function deleteNote(noteId: string) {
@@ -39,9 +40,9 @@ export const useNotesStore = defineStore('notes', () => {
   return {
     initialize,
     lastUpdate,
-    saveNote,
+    saveNotebook,
     getNotesFor,
-    getNote,
+    getNotebook,
     deleteNote
   }
 })

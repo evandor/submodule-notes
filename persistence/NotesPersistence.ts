@@ -1,5 +1,6 @@
 import Persistence from "src/core/persistence/Persistence";
-import {Note} from "src/notes/models/Note";
+import {NotesPage} from "src/notes/models/NotesPage";
+import {Notebook} from "src/notes/models/Notebook";
 
 abstract class NotesPersistence implements Persistence {
 
@@ -9,15 +10,15 @@ abstract class NotesPersistence implements Persistence {
 
   abstract init(): Promise<any>
 
-  abstract getNote(noteId: string): Promise<Note>
+  abstract getNotebook(notebookId: string): Promise<Notebook>
 
-  abstract getNotesForSourceId(sourceId: string): Promise<Note[]>
+  abstract getNotesForSourceId(sourceId: string): Promise<NotesPage[]>
 
   abstract deleteNote(noteId: string): Promise<void>
 
-  abstract saveNote(Note: Note): Promise<any>
+  abstract saveNotebook(notebook: Notebook): Promise<any>
 
-  abstract getNotes(): Promise<Note[]>
+  abstract getNotes(): Promise<NotesPage[]>
 
   compactDb(): Promise<any> {
     return Promise.resolve("noOp");
