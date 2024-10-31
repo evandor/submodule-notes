@@ -1,8 +1,38 @@
 <template>
 
-  <div v-for="note in notes">
-    <div class="q-ml-md cursor-pointer" @click="openNote(note)">{{note.title}}</div>
-  </div>
+  <q-list :separator="false">
+    <q-item v-for="note in notes"
+            @click="openNote(note)"
+            clickable
+            v-ripple
+            class="q-ma-none q-pa-sm">
+
+      <q-item-section class="q-mx-sm" style="justify-content:start;width:25px;max-width:25px">
+        <div class="q-pa-none q-pl-none">
+          <q-icon name="o_note_alt" color="primary" size="sm"/>
+        </div>
+      </q-item-section>
+
+      <q-item-section>
+        <q-item-label>
+          <div class="text-subtitle2 ellipsis">
+            {{ note.title }}
+          </div>
+        </q-item-label>
+        <q-item-label class="text-caption text-grey-5">
+
+        </q-item-label>
+      </q-item-section>
+
+      <q-item-section side>
+        <q-item-label>
+<!--          <q-icon class="cursor-pointer" name="more_vert" size="16px"/>-->
+<!--          <SidePanelSubfolderContextMenu :tabset="currentTabset" :folder="folder"/>-->
+        </q-item-label>
+      </q-item-section>
+    </q-item>
+  </q-list>
+
 
 </template>
 
