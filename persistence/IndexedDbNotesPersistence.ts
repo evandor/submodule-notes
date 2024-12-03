@@ -28,7 +28,7 @@ class IndexedDbNotesPersistence extends NotesPersistence {
     });
   }
 
-  compactDb(): Promise<any> {
+  override compactDb(): Promise<any> {
     return Promise.resolve(undefined);
   }
 
