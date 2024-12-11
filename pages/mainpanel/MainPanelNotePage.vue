@@ -264,8 +264,8 @@ const saveWork = async () => {
   if (subpage) {
     subpage.content = outputData
     if (subpage.content && subpage.content.blocks.length > 0) {
-      if (subpage.content.blocks[0].type === "header") {
-        subpage.title = sanitize(subpage.content.blocks[0].data.text)
+      if (subpage.content.blocks[0]!.type === "header") {
+        subpage.title = sanitize(subpage.content.blocks[0]!.data.text)
       }
     }
   }

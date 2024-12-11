@@ -2,8 +2,8 @@ import NotesPersistence from "src/notes/persistence/NotesPersistence";
 import {collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, where} from "firebase/firestore";
 import FirebaseServices from "src/services/firebase/FirebaseServices";
 import {useAuthStore} from "stores/authStore";
-import {Notebook} from "src/notes/models/Notebook.ts";
-import {NotesPage} from "src/notes/models/NotesPage.ts";
+import {Notebook} from "src/notes/models/Notebook";
+import {NotesPage} from "src/notes/models/NotesPage";
 
 const STORE_IDENT = 'notes';
 
