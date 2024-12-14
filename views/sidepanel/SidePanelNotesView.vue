@@ -54,7 +54,7 @@ const props = defineProps({
 const notes = ref<NotesPage[]>([])
 const treeData = ref<object[]>()
 
-function treeNodeFromNote(n: NotesPage) {
+function treeNodeFromNote(n: NotesPage):object {
   return {
     text: n.title,
     url: chrome.runtime.getURL(`/www/index.html#/mainpanel/notes/${n.id}`),
