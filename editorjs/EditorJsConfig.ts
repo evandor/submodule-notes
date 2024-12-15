@@ -25,7 +25,7 @@ import {LinkTool2} from "src/notes/editorjs/linkTool"
 
 // @ts-ignore
 import FirebaseServices from "src/services/firebase/FirebaseServices";
-import {useAuthStore} from "stores/authStore";
+import {useAuthStore} from "src/stores/authStore";
 import {uid} from "quasar";
 
 class EditorJsConfig {

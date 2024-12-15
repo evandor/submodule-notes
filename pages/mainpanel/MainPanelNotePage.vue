@@ -88,7 +88,7 @@ import EditorJsConfig from "src/notes/editorjs/EditorJsConfig";
 import '../../editorjs/linkTool.css';
 import {NotesPage} from "src/notes/models/NotesPage";
 import {useNotesStore} from "src/notes/stores/NotesStore";
-import {useSettingsStore} from "stores/settingsStore";
+import {useSettingsStore} from "src/stores/settingsStore";
 import {Draggable, OpenIcon} from "@he-tree/vue";
 import '@he-tree/vue/style/default.css'
 import _ from "lodash";
