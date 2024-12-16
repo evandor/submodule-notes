@@ -1,29 +1,29 @@
-// @ts-ignore
+// @ts-expect-error
 import Header from "@editorjs/header";
-// @ts-ignore
+// @ts-expect-error
 import LinkTool from "@editorjs/link";
-// @ts-ignore
+// @ts-expect-error
 import Quote from "@editorjs/quote";
-// @ts-ignore
+// @ts-expect-error
 import ImageTool from "@editorjs/image";
-// @ts-ignore
+// @ts-expect-error
 import Table from "@editorjs/table";
-// @ts-ignore
+// @ts-expect-error
 import RawTool from "@editorjs/raw";
-// @ts-ignore
+// @ts-expect-error
 import Checklist from "@editorjs/checklist";
-// @ts-ignore
+// @ts-expect-error
 import editorjsColumns from "@calumk/editorjs-columns";
-// @ts-ignore
+// @ts-expect-error
 import Alert from "editorjs-alert";
-// @ts-ignore
+// @ts-expect-error
 import ColorPlugin from "editorjs-text-color-plugin";
 
-// @ts-ignore
+// @ts-expect-error
 import EditorJS from "@editorjs/editorjs";
 import {LinkTool2} from "src/notes/editorjs/linkTool"
 
-// @ts-ignore
+// @ts-expect-error
 import FirebaseServices from "src/services/firebase/FirebaseServices";
 import {useAuthStore} from "src/stores/authStore";
 import {uid} from "quasar";
