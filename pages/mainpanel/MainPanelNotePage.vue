@@ -154,7 +154,6 @@ watchEffect(async () => {
 
 useMeta(() => {
   return {
-    // @ts-expect-error
     title: 'Note: ' + title.value
   }
 })
@@ -183,7 +182,6 @@ const loadNotebookAndPage = (notebookId: string, subNoteId: string | undefined) 
 
       if (!editorJS2) {
         console.log("hier", useSettingsStore().isEnabled('localMode'))
-        // @ts-expect-error
         editorJS2 = new EditorJS({
           holder: "editorjs",
           readOnly: !editMode.value,
@@ -213,7 +211,6 @@ watchEffect(async () => {
 
     if (!editorJS2) { // && !editorJS2.isReady) {
       console.log("hier2", useSettingsStore().isEnabled('localMode'))
-      // @ts-expect-error
       editorJS2 = new EditorJS({
         holder: "editorjs",
         autofocus: true,

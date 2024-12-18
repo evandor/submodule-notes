@@ -1,32 +1,14 @@
-// @ts-expect-error
 import Header from "@editorjs/header";
-// @ts-expect-error
-import LinkTool from "@editorjs/link";
-// @ts-expect-error
-import Quote from "@editorjs/quote";
-// @ts-expect-error
-import ImageTool from "@editorjs/image";
-// @ts-expect-error
 import Table from "@editorjs/table";
-// @ts-expect-error
-import RawTool from "@editorjs/raw";
-// @ts-expect-error
-import Checklist from "@editorjs/checklist";
-// @ts-expect-error
+// @ts-expect-error TODO
 import editorjsColumns from "@calumk/editorjs-columns";
-// @ts-expect-error
+// @ts-expect-error TODO
 import Alert from "editorjs-alert";
-// @ts-expect-error
+// @ts-expect-error TODO
 import ColorPlugin from "editorjs-text-color-plugin";
 
-// @ts-expect-error
 import EditorJS from "@editorjs/editorjs";
 import {LinkTool2} from "src/notes/editorjs/linkTool"
-
-// @ts-expect-error
-import FirebaseServices from "src/services/firebase/FirebaseServices";
-import {useAuthStore} from "src/stores/authStore";
-import {uid} from "quasar";
 
 class EditorJsConfig {
 
