@@ -79,7 +79,6 @@ import {onMounted, ref, watchEffect} from "vue";
 import {useRoute} from "vue-router";
 import {uid, useMeta} from "quasar";
 import {useUtils} from "src/core/services/Utils";
-//@ts-ignore
 import EditorJS, {OutputData} from "@editorjs/editorjs";
 import Analytics from "src/core/utils/google-analytics";
 
