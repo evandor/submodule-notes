@@ -1,5 +1,5 @@
-import sanitize from "sanitize-html";
-import {OutputData} from "@editorjs/editorjs";
+import sanitize from 'sanitize-html'
+import { OutputData } from '@editorjs/editorjs'
 
 export class NotesPage {
   created: number
@@ -9,11 +9,10 @@ export class NotesPage {
   constructor(
     public id: string,
     public title: string,
-    public content: OutputData = {blocks: []},
-    public subPages: NotesPage[] = []
+    public content: OutputData = { blocks: [] },
+    public subPages: NotesPage[] = [],
   ) {
     this.created = new Date().getTime()
     this.title = sanitize(title)
   }
-
 }

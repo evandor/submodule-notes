@@ -1,10 +1,9 @@
-import {defineStore} from 'pinia';
-import {ref} from "vue";
-import NotesPersistence from "src/notes/persistence/NotesPersistence";
-import {Notebook} from "src/notes/models/Notebook";
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import NotesPersistence from 'src/notes/persistence/NotesPersistence'
+import { Notebook } from 'src/notes/models/Notebook'
 
 export const useNotesStore = defineStore('notes', () => {
-
   let storage: NotesPersistence = null as unknown as NotesPersistence
 
   const lastUpdate = ref(0)
@@ -14,7 +13,7 @@ export const useNotesStore = defineStore('notes', () => {
     await storage.init()
     //metadata.value = await storage.getMetadata()
     lastUpdate.value = new Date().getTime()
-    console.debug(" ...initialized notes: Store",'✅')
+    console.debug(' ...initialized notes: Store', '✅')
   }
 
   async function saveNotebook(notebook: Notebook) {
@@ -42,6 +41,6 @@ export const useNotesStore = defineStore('notes', () => {
     saveNotebook,
     getNotesFor,
     getNotebook,
-    deleteNote
+    deleteNote,
   }
 })
