@@ -5,7 +5,6 @@
 </template>
 
 <script lang="ts" setup>
-
 // const props = defineProps(['item', 'depth', 'expanded'])
 
 // const props = defineProps({
@@ -15,7 +14,7 @@
 // })
 
 const clicked = () => {
-  console.log("clicked")
+  console.log('clicked')
 }
 // defineEmits(['setExpanded'])
 // const delete = () => {

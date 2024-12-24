@@ -1,8 +1,8 @@
-import sanitize from "sanitize-html";
-import {NotesPage} from "src/notes/models/NotesPage";
+import sanitize from 'sanitize-html'
+import { NotesPage } from 'src/notes/models/NotesPage'
 
 export enum NotebookType {
-  TABSET = "TABSET"
+  TABSET = 'TABSET',
 }
 
 export class Notebook {
@@ -15,10 +15,9 @@ export class Notebook {
     public sourceId: string,
     public type: NotebookType,
     public title: string,
-    public subPages: NotesPage[] = []
+    public subPages: NotesPage[] = [],
   ) {
     this.created = new Date().getTime()
     this.title = sanitize(title)
   }
-
 }

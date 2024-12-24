@@ -4,7 +4,8 @@
 -->
 <style>
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+      'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     font-size: 14px;
     line-height: 1.5em;
   }
@@ -12,7 +13,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
 <script src="thumbnail-from-tabs.js"></script>
-<link href="thumbnail-from-tabs.css" rel="stylesheet"/>
+<link href="thumbnail-from-tabs.css" rel="stylesheet" />
 
 <div id="editorjs" style="max-width: 1000px; margin: 0 auto"></div>
 
@@ -30,9 +31,9 @@
         class: ThumbnailFromTabs,
         inlineToolbar: true,
         config: {
-          placeholder: 'Paste image URL'
-        }
-      }
+          placeholder: 'Paste image URL',
+        },
+      },
     },
     // data: {
     //   time: 1552744582955,
@@ -50,17 +51,17 @@
     //   ],
     //   version: "2.11.10"
     // }
-  });
+  })
 
   /**
    * Add handler for the Save button
    */
-  const saveButton = document.getElementById('save-button');
-  const output = document.getElementById('output');
+  const saveButton = document.getElementById('save-button')
+  const output = document.getElementById('output')
 
   saveButton.addEventListener('click', () => {
-    editor.save().then( savedData => {
-      output.innerHTML = JSON.stringify(savedData, null, 4);
+    editor.save().then((savedData) => {
+      output.innerHTML = JSON.stringify(savedData, null, 4)
     })
   })
 </script>
