@@ -1,4 +1,3 @@
-import NotesPersistence from 'src/notes/persistence/NotesPersistence'
 import {
   collection,
   deleteDoc,
@@ -9,10 +8,11 @@ import {
   setDoc,
   where,
 } from 'firebase/firestore'
-import FirebaseServices from 'src/services/firebase/FirebaseServices'
-import { useAuthStore } from 'stores/authStore'
 import { Notebook } from 'src/notes/models/Notebook'
 import { NotesPage } from 'src/notes/models/NotesPage'
+import NotesPersistence from 'src/notes/persistence/NotesPersistence'
+import FirebaseServices from 'src/services/firebase/FirebaseServices'
+import { useAuthStore } from 'stores/authStore'
 
 const STORE_IDENT = 'notes'
 

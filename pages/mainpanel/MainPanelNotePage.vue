@@ -88,21 +88,19 @@
 
 <script lang="ts" setup>
 import 'regenerator-runtime/runtime'
-import { onMounted, ref, watchEffect } from 'vue'
-import { useRoute } from 'vue-router'
-import { uid, useMeta } from 'quasar'
-import { useUtils } from 'src/core/services/Utils'
 //@ts-ignore
 import EditorJS, { OutputData } from '@editorjs/editorjs'
+import { uid, useMeta } from 'quasar'
+import { useUtils } from 'src/core/services/Utils'
 import Analytics from 'src/core/utils/google-analytics'
-
 import EditorJsConfig from 'src/notes/editorjs/EditorJsConfig'
-
+import { onMounted, ref, watchEffect } from 'vue'
+import { useRoute } from 'vue-router'
 import '../../editorjs/linkTool.css'
+import { Draggable, OpenIcon } from '@he-tree/vue'
 import { NotesPage } from 'src/notes/models/NotesPage'
 import { useNotesStore } from 'src/notes/stores/NotesStore'
 import { useSettingsStore } from 'stores/settingsStore'
-import { Draggable, OpenIcon } from '@he-tree/vue'
 import '@he-tree/vue/style/default.css'
 import _ from 'lodash'
 import { Notebook } from 'src/notes/models/Notebook'

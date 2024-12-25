@@ -1,6 +1,6 @@
 import Persistence from 'src/core/persistence/Persistence'
-import { NotesPage } from 'src/notes/models/NotesPage'
 import { Notebook } from 'src/notes/models/Notebook'
+import { NotesPage } from 'src/notes/models/NotesPage'
 
 abstract class NotesPersistence implements Persistence {
   getServiceName(): string {

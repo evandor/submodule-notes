@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import NotesPersistence from 'src/notes/persistence/NotesPersistence'
 import { Notebook } from 'src/notes/models/Notebook'
+import NotesPersistence from 'src/notes/persistence/NotesPersistence'
+import { ref } from 'vue'
 
 export const useNotesStore = defineStore('notes', () => {
   let storage: NotesPersistence = null as unknown as NotesPersistence

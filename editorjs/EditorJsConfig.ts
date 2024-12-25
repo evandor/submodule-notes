@@ -1,46 +1,42 @@
 // @ts-ignore
-import Header from '@editorjs/header'
+
 // @ts-ignore
-import LinkTool from '@editorjs/link'
-// @ts-ignore
-import Quote from '@editorjs/quote'
-// @ts-ignore
-import ImageTool from '@editorjs/image'
-// @ts-ignore
-import Table from '@editorjs/table'
-// @ts-ignore
-import RawTool from '@editorjs/raw'
-// @ts-ignore
-import Checklist from '@editorjs/checklist'
+import editorjsCodecup from '@calumk/editorjs-codecup'
 // @ts-ignore
 import editorjsColumns from '@calumk/editorjs-columns'
 // @ts-ignore
-import Alert from 'editorjs-alert'
-// @ts-ignore
-import ColorPlugin from 'editorjs-text-color-plugin'
-
+import Checklist from '@editorjs/checklist'
 // @ts-ignore - almost no features
 import CodeTool from '@editorjs/code'
-
 // does not support read-only mode
 // import CodeBox from '@bomdi/codebox';
 
 // @ts-ignore
 import EditorJS from '@editorjs/editorjs'
-import { LinkTool2 } from 'src/notes/editorjs/linkTool'
-
+import Header from '@editorjs/header'
 // @ts-ignore
-import editorjsCodecup from '@calumk/editorjs-codecup'
-
+import ImageTool from '@editorjs/image'
 // @ts-ignore
 import InlineCode from '@editorjs/inline-code'
-
+// @ts-ignore
+import LinkTool from '@editorjs/link'
+// @ts-ignore
+import Quote from '@editorjs/quote'
+// @ts-ignore
+import RawTool from '@editorjs/raw'
+// @ts-ignore
+import Table from '@editorjs/table'
+// @ts-ignore
+import Alert from 'editorjs-alert'
+// @ts-ignore
+import ColorPlugin from 'editorjs-text-color-plugin'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { uid } from 'quasar'
 // @ts-ignore
 import { SimpleImage } from 'src/notes/editorjs/blocktools/simple-image/simple-image'
+import { LinkTool2 } from 'src/notes/editorjs/linkTool'
 import FirebaseServices from 'src/services/firebase/FirebaseServices'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { useAuthStore } from 'stores/authStore'
-import { uid } from 'quasar'
 
 class EditorJsConfig {
   private imageConfig = {
