@@ -33,10 +33,10 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref, watchEffect } from 'vue'
-import { Tabset } from 'src/tabsets/models/Tabset'
-import { useNotesStore } from 'src/notes/stores/NotesStore'
 import { NotesPage } from 'src/notes/models/NotesPage'
+import { useNotesStore } from 'src/notes/stores/NotesStore'
+import { Tabset } from 'src/tabsets/models/Tabset'
+import { PropType, ref, watchEffect } from 'vue'
 import '@he-tree/vue/style/default.css'
 import '@he-tree/vue/style/material-design.css'
 import _ from 'lodash'

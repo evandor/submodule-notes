@@ -1,7 +1,7 @@
 import { IDBPDatabase, openDB } from 'idb'
-import NotesPersistence from 'src/notes/persistence/NotesPersistence'
-import { NotesPage } from 'src/notes/models/NotesPage'
 import { Notebook } from 'src/notes/models/Notebook'
+import { NotesPage } from 'src/notes/models/NotesPage'
+import NotesPersistence from 'src/notes/persistence/NotesPersistence'
 
 class IndexedDbNotesPersistence extends NotesPersistence {
   private STORE_IDENT = 'notebooks'

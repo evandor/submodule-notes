@@ -1,5 +1,5 @@
-import sanitize from 'sanitize-html'
 import { OutputData } from '@editorjs/editorjs'
+import sanitize from 'sanitize-html'
 
 export class NotesPage {
   created: number

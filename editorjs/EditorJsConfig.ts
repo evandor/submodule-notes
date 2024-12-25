@@ -1,13 +1,12 @@
-import Header from '@editorjs/header'
-import Table from '@editorjs/table'
 // @ts-expect-error TODO
 import editorjsColumns from '@calumk/editorjs-columns'
+import EditorJS from '@editorjs/editorjs'
+import Header from '@editorjs/header'
+import Table from '@editorjs/table'
 // @ts-expect-error TODO
 import Alert from 'editorjs-alert'
 // @ts-expect-error TODO
 import ColorPlugin from 'editorjs-text-color-plugin'
-
-import EditorJS from '@editorjs/editorjs'
 import { LinkTool2 } from 'src/notes/editorjs/linkTool'
 
 class EditorJsConfig {
