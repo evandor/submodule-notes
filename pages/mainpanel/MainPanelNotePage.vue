@@ -88,7 +88,6 @@
 
 <script lang="ts" setup>
 import 'regenerator-runtime/runtime'
-//@ts-ignore
 import EditorJS, { OutputData } from '@editorjs/editorjs'
 import { uid, useMeta } from 'quasar'
 import { useUtils } from 'src/core/services/Utils'
@@ -100,7 +99,7 @@ import '../../editorjs/linkTool.css'
 import { Draggable, OpenIcon } from '@he-tree/vue'
 import { NotesPage } from 'src/notes/models/NotesPage'
 import { useNotesStore } from 'src/notes/stores/NotesStore'
-import { useSettingsStore } from 'stores/settingsStore'
+import { useSettingsStore } from 'src/stores/settingsStore'
 import '@he-tree/vue/style/default.css'
 import _ from 'lodash'
 import { Notebook } from 'src/notes/models/Notebook'
@@ -165,7 +164,6 @@ watchEffect(async () => {
 
 useMeta(() => {
   return {
-    // @ts-ignore
     title: 'Note: ' + title.value,
   }
 })
@@ -195,7 +193,6 @@ const loadNotebookAndPage = (notebookId: string, subNoteId: string | undefined) 
 
       if (!editorJS2) {
         console.log('hier', useSettingsStore().isEnabled('localMode'))
-        // @ts-ignore
         editorJS2 = new EditorJS({
           holder: 'editorjs',
           readOnly: !editMode.value,
@@ -226,7 +223,6 @@ watchEffect(async () => {
     if (!editorJS2) {
       // && !editorJS2.isReady) {
       console.log('hier2', useSettingsStore().isEnabled('localMode'))
-      // @ts-ignore
       editorJS2 = new EditorJS({
         holder: 'editorjs',
         autofocus: true,
