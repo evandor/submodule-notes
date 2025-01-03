@@ -1,12 +1,6 @@
 <template>
   <q-list :separator="false">
-    <q-item
-      v-for="note in notes"
-      @click="openNote(note)"
-      clickable
-      v-ripple
-      class="q-ma-none q-pa-sm"
-    >
+    <q-item v-for="note in notes" @click="openNote(note)" clickable v-ripple class="q-ma-none q-pa-sm">
       <q-item-section class="q-mx-sm" style="justify-content: start; width: 25px; max-width: 25px">
         <div class="q-pa-none q-pl-none">
           <q-icon name="o_note_alt" color="primary" size="sm" />
@@ -67,7 +61,5 @@ watchEffect(async () => {
 })
 
 const openNote = (n: NotesPage) =>
-  NavigationService.openOrCreateTab([
-    chrome.runtime.getURL(`/www/index.html#/mainpanel/notes/${n.id}`),
-  ])
+  NavigationService.openOrCreateTab([chrome.runtime.getURL(`/www/index.html#/mainpanel/notes/${n.id}`)])
 </script>

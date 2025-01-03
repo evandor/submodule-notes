@@ -3,20 +3,13 @@
   <q-page style="padding-top: 50px">
     <div class="row">
       <div class="col-2 q-mt-lg">
-        <Draggable
-          v-if="treeData"
-          class="mtl-tree q-pl-md"
-          v-model="treeData"
-          treeLine
-          :tree-line-offset="0"
-        >
+        <Draggable v-if="treeData" class="mtl-tree q-pl-md" v-model="treeData" treeLine :tree-line-offset="0">
           <template #default="{ node, stat }">
             <OpenIcon
               v-if="stat.children.length"
               :open="stat.open"
               class="mtl-mr"
-              @click.native="stat.open = !stat.open"
-            />
+              @click.native="stat.open = !stat.open" />
             <span class="mtl-ml cursor-pointer" @click="openSubNote(node)">{{ node.text }}</span>
           </template>
         </Draggable>
@@ -27,20 +20,10 @@
           <div id="editorjs" ref="editorJsRef" @keyup="(v) => keyUpEvent()" />
         </div>
         <div>
-          <Transition
-            appear
-            enter-active-class="animated fadeIn slower delay-5s"
-            leave-active-class="animated fadeOut"
-          >
+          <Transition appear enter-active-class="animated fadeIn slower delay-5s" leave-active-class="animated fadeOut">
             <div>
               <q-btn v-if="dirty" label="save" class="q-mr-sm q-px-sm" dense @click="saveWork()" />
-              <q-btn
-                v-if="!dirty"
-                label="new Subpage"
-                class="q-mr-sm q-px-sm"
-                dense
-                @click="newSubPage()"
-              />
+              <q-btn v-if="!dirty" label="new Subpage" class="q-mr-sm q-px-sm" dense @click="newSubPage()" />
               <q-btn label="Delete this page" class="q-mr-sm q-mx-sm" dense @click="deletePage()" />
             </div>
           </Transition>
@@ -53,33 +36,20 @@
       <div class="col-2"></div>
     </div>
 
-    <q-page-sticky
-      expand
-      position="top"
-      class="darkInDarkMode brightInBrightMode"
-      style="width: 100%"
-    >
+    <q-page-sticky expand position="top" class="darkInDarkMode brightInBrightMode" style="width: 100%">
       <div class="row" style="border-bottom: 1px solid #efefef; width: 100%">
         <div class="col q-ma-sm text-h5 cursor-pointer">
           {{ notebook?.title }}
           <q-popup-edit
             :model-value="notebook?.title"
             v-slot="scope"
-            @update:model-value="(val: string) => setNotebookTitle(val)"
-          >
+            @update:model-value="(val: string) => setNotebookTitle(val)">
             <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
           </q-popup-edit>
         </div>
         <div class="col text-right q-ma-sm">
           <q-btn v-if="dirty" class="q-mr-md" label="save" size="sm" @click="saveWork()" />
-          <q-btn
-            class="cursor-pointer"
-            @click="newPage()"
-            :disable="dirty"
-            icon="add"
-            size="sm"
-            label="New Page"
-          />
+          <q-btn class="cursor-pointer" @click="newPage()" :disable="dirty" icon="add" size="sm" label="New Page" />
         </div>
       </div>
     </q-page-sticky>
@@ -228,9 +198,7 @@ watchEffect(async () => {
         autofocus: true,
         readOnly: false,
         data: { blocks: [] } as OutputData,
-        tools: useSettingsStore().isEnabled('localMode')
-          ? EditorJsConfig.toolsconfigLocal
-          : EditorJsConfig.toolsconfig,
+        tools: useSettingsStore().isEnabled('localMode') ? EditorJsConfig.toolsconfigLocal : EditorJsConfig.toolsconfig,
       })
     }
   }
@@ -273,10 +241,7 @@ const saveWork = async () => {
 
   const outputData: OutputData = await editorJS2.save()
 
-  const subpage = executeOnSubPage(
-    subNote.value?.id,
-    (parent: Notebook | NotesPage, p: NotesPage) => p,
-  )
+  const subpage = executeOnSubPage(subNote.value?.id, (parent: Notebook | NotesPage, p: NotesPage) => p)
   if (subpage) {
     subpage.content = outputData
     if (subpage.content && subpage.content.blocks.length > 0) {

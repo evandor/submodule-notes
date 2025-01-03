@@ -1,13 +1,4 @@
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  setDoc,
-  where,
-} from 'firebase/firestore'
+import { collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore'
 import { Notebook } from 'src/notes/models/Notebook'
 import { NotesPage } from 'src/notes/models/NotesPage'
 import NotesPersistence from 'src/notes/persistence/NotesPersistence'
@@ -41,12 +32,7 @@ class FirestoreNotesPersistence extends NotesPersistence {
 
   async getNotesForSourceId(sourceId: string): Promise<NotesPage[]> {
     const res: NotesPage[] = []
-    const cr = collection(
-      FirebaseServices.getFirestore(),
-      'users',
-      useAuthStore().user?.uid || 'x',
-      STORE_IDENT,
-    )
+    const cr = collection(FirebaseServices.getFirestore(), 'users', useAuthStore().user?.uid || 'x', STORE_IDENT)
     const r = query(cr, where('sourceId', '==', sourceId))
     const querySnapshot = await getDocs(r)
     querySnapshot.forEach((doc) => {
