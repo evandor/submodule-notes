@@ -11,12 +11,7 @@ export class CreateNotebookCommand implements Command<string> {
   constructor(public tabset: Tabset) {}
 
   async execute(): Promise<ExecutionResult<string>> {
-    const newNotebook = new Notebook(
-      uid(),
-      this.tabset.id,
-      NotebookType.TABSET,
-      'Notes for ' + this.tabset.name,
-    )
+    const newNotebook = new Notebook(uid(), this.tabset.id, NotebookType.TABSET, 'Notes for ' + this.tabset.name)
     const firstNote = new NotesPage(uid(), 'new note', {
       blocks: [
         {
