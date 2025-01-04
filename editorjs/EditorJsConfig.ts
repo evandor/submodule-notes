@@ -1,71 +1,13 @@
-// @ts-ignore
-
-// @ts-ignore
-import editorjsCodecup from '@calumk/editorjs-codecup'
-// @ts-ignore
+// @ts-expect-error TODO
 import editorjsColumns from '@calumk/editorjs-columns'
-// @ts-ignore
-import Checklist from '@editorjs/checklist'
-// @ts-ignore - almost no features
-import CodeTool from '@editorjs/code'
-// does not support read-only mode
-// import CodeBox from '@bomdi/codebox';
-
-// @ts-ignore
 import EditorJS from '@editorjs/editorjs'
 import Header from '@editorjs/header'
-// @ts-ignore
-import ImageTool from '@editorjs/image'
-// @ts-ignore
-import InlineCode from '@editorjs/inline-code'
-// @ts-ignore
-import LinkTool from '@editorjs/link'
-// @ts-ignore
-import Quote from '@editorjs/quote'
-// @ts-ignore
-import RawTool from '@editorjs/raw'
-// @ts-ignore
 import Table from '@editorjs/table'
-// @ts-ignore
-import Alert from 'editorjs-alert'
-// @ts-ignore
+// @ts-expect-error TODO
 import ColorPlugin from 'editorjs-text-color-plugin'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import { uid } from 'quasar'
-// @ts-ignore
-import { SimpleImage } from 'src/notes/editorjs/blocktools/simple-image/simple-image'
 import { LinkTool2 } from 'src/notes/editorjs/linkTool'
-import FirebaseServices from 'src/services/firebase/FirebaseServices'
-import { useAuthStore } from 'stores/authStore'
 
 class EditorJsConfig {
-  private imageConfig = {
-    class: ImageTool,
-    config: {
-      uploader: {
-        // https://stackoverflow.com/questions/63610441/how-to-upload-image-to-firebase-storage-for-editor-js
-        async uploadByFile(file: any) {
-          console.log('got file', file)
-          const storageRef = ref(
-            FirebaseServices.getStorage(),
-            `users/${useAuthStore().user.uid}/notes/images/${uid()}`,
-          )
-          const sn = await uploadBytes(storageRef, file)
-          const downloadUrl = await getDownloadURL(sn.ref)
-          console.log('Uploaded successfully!', sn, downloadUrl)
-          return {
-            success: 1,
-            file: {
-              url: downloadUrl,
-            },
-          }
-        },
-
-        uploadByUrl(url: string) {},
-      },
-    },
-  }
-
   column_tools = {
     header: Header,
     linkTool2: {
@@ -115,9 +57,7 @@ class EditorJsConfig {
         EditorJsLibrary: EditorJS,
         tools: this.column_tools,
       },
-      },
     },
-    image: this.imageConfig,
     //      alert: Alert,
     Color: {
       class: ColorPlugin, // if load from CDN, please try: window.ColorPlugin
@@ -155,11 +95,6 @@ class EditorJsConfig {
     //     placeholder: 'Paste image URL'
     //   }
     // }
-    code: editorjsCodecup,
-    inlineCode: {
-      class: InlineCode,
-      // shortcut: 'CMD+SHIFT+M',
-    },
   }
 }
 

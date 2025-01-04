@@ -46,6 +46,11 @@ class FirestoreNotesPersistence extends NotesPersistence {
   async saveNotebook(notebook: Notebook): Promise<any> {
     await setDoc(noteDoc(notebook.id), JSON.parse(JSON.stringify(notebook)))
   }
+
+  getNotebookList(): Promise<Notebook[]> {
+    console.log('not implemented')
+    return Promise.resolve([])
+  }
 }
 
 export default new FirestoreNotesPersistence()
