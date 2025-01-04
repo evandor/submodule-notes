@@ -1,8 +1,8 @@
 // @ts-expect-error TODO
 import editorjsColumns from '@calumk/editorjs-columns'
 import EditorJS from '@editorjs/editorjs'
+import { ToolConstructable, ToolSettings } from '@editorjs/editorjs/types/tools'
 import Header from '@editorjs/header'
-import Table from '@editorjs/table'
 // @ts-expect-error TODO
 import ColorPlugin from 'editorjs-text-color-plugin'
 import { LinkTool2 } from 'src/notes/editorjs/linkTool'
@@ -23,9 +23,11 @@ class EditorJsConfig {
 
   toolsconfigLocal = {}
 
-  toolsconfig = {
+  toolsconfig: {
+    [toolName: string]: ToolConstructable | ToolSettings
+  } = {
     header: {
-      class: Header,
+      //class: Header,
       //         shortcut: "CMD+SHIFT+H"
     },
     // quote: {
@@ -38,13 +40,13 @@ class EditorJsConfig {
     //     }
     // },
     linkTool2: {
-      class: LinkTool2,
+      //class: LinkTool2,
       config: {
         endpoint: `/www/editor.html`, // Your backend endpoint for url data fetching,
       },
     },
     table: {
-      class: Table,
+      // class: Table,
       inlineToolbar: true,
       config: {
         rows: 2,
