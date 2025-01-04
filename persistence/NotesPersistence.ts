@@ -9,6 +9,8 @@ abstract class NotesPersistence implements Persistence {
 
   abstract init(): Promise<any>
 
+  abstract getNotebookList(): Promise<Notebook[]>
+
   abstract getNotebook(notebookId: string): Promise<Notebook>
 
   abstract getNotesForSourceId(sourceId: string): Promise<NotesPage[]>

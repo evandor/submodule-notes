@@ -27,6 +27,10 @@ export const useNotesStore = defineStore('notes', () => {
     return Promise.resolve([])
   }
 
+  async function getNotebookList() {
+    return storage.getNotebookList()
+  }
+
   async function getNotebook(notebookId: string) {
     return storage.getNotebook(notebookId)
   }
@@ -42,5 +46,6 @@ export const useNotesStore = defineStore('notes', () => {
     getNotesFor,
     getNotebook,
     deleteNote,
+    getNotebookList,
   }
 })
