@@ -115,6 +115,7 @@ class EditorJsConfig {
         EditorJsLibrary: EditorJS,
         tools: this.column_tools,
       },
+      },
     },
     image: this.imageConfig,
     //      alert: Alert,

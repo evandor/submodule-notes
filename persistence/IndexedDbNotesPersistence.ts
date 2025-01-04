@@ -35,6 +35,14 @@ class IndexedDbNotesPersistence extends NotesPersistence {
     return this.db.delete(this.STORE_IDENT, noteId)
   }
 
+  getNotebookList(): Promise<Notebook[]> {
+    if (this.db) {
+      // TODO get only relevant parts, not the whole object
+      return this.db.getAll(this.STORE_IDENT)
+    }
+    return Promise.reject('db not ready (yet)')
+  }
+
   getNotebook(notebookId: string): Promise<Notebook> {
     if (this.db) {
       return this.db.get(this.STORE_IDENT, notebookId)

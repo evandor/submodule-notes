@@ -8,9 +8,9 @@
 // const props = defineProps(['item', 'depth', 'expanded'])
 
 // const props = defineProps({
-//   item: {type:Object, required: true},
-//   depth: {type:Number, required: true},
-//   expanded: {type:Boolean, default: true}
+//   item: { type: Object, required: true },
+//   depth: { type: Number, required: true },
+//   expanded: { type: Boolean, default: true },
 // })
 
 const clicked = () => {
