@@ -10,7 +10,7 @@ class IndexedDbNotesPersistence extends NotesPersistence {
 
   async init() {
     this.db = await this.initDatabase()
-    console.debug(` ...initialized Note: ${this.getServiceName()}`, '✅')
+    // console.debug(` ...initialized Note: ${this.getServiceName()}`, '✅')
     return Promise.resolve()
   }
 

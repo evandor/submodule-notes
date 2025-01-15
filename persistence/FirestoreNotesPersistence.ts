@@ -13,7 +13,7 @@ function noteDoc(noteId: string) {
 
 class FirestoreNotesPersistence extends NotesPersistence {
   async init() {
-    console.debug(` ...initialized notes: ${this.getServiceName()}`, '✅')
+    // console.debug(` ...initialized notes: ${this.getServiceName()}`, '✅')
     return Promise.resolve('')
   }
 
