@@ -13,7 +13,7 @@ export const useNotesStore = defineStore('notes', () => {
     await storage.init()
     //metadata.value = await storage.getMetadata()
     lastUpdate.value = new Date().getTime()
-    console.debug(' ...initialized notes: Store', '✅')
+    // console.debug(' ...initialized notes: Store', '✅')
   }
 
   async function saveNotebook(notebook: Notebook) {
