@@ -21,6 +21,7 @@ export const useNotesStore = defineStore('notes', () => {
   }
 
   async function getNotesFor(sourceId: string) {
+    console.log('getting notes for ', storage, sourceId)
     if (storage) {
       return storage.getNotesForSourceId(sourceId)
     }
