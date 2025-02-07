@@ -72,7 +72,7 @@ import { useNotesStore } from 'src/notes/stores/NotesStore'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import '@he-tree/vue/style/default.css'
 import _ from 'lodash'
-import { Notebook } from 'src/notes/models/Notebook'
+import { Notebook, NotebookType } from 'src/notes/models/Notebook'
 
 const { sendMsg, sanitize } = useUtils()
 
@@ -83,6 +83,8 @@ const notebook = ref<Notebook | undefined>(undefined)
 
 const subNoteId = ref<string | undefined>(route.params.subNoteId as unknown as string)
 const subNote = ref<NotesPage | undefined>(undefined)
+
+const tabsetId = ref<string | undefined>(undefined)
 
 const editMode = ref(true)
 const title = ref('')
@@ -108,7 +110,7 @@ function executeOnSubPage(
   fnc: (parent: Notebook | NotesPage, p: NotesPage) => NotesPage,
   tree: { parent: Notebook | NotesPage; pages: NotesPage[] } = {
     parent: notebook.value!,
-    pages: notebook.value!.subPages,
+    pages: notebook.value?.subPages ? notebook.value!.subPages : [],
   },
 ): NotesPage | undefined {
   for (const sn of tree.pages) {
@@ -140,6 +142,8 @@ useMeta(() => {
 
 onMounted(() => {
   Analytics.firePageViewEvent('MainPanelNotePage', document.location.href)
+  console.log('route', route.query.tsId)
+  tabsetId.value = route.query.tsId as string | undefined
 })
 
 watchEffect(() => (dirty.value = editMode.value && dirty.value))
@@ -184,7 +188,9 @@ const loadNotebookAndPage = (notebookId: string, subNoteId: string | undefined) 
 }
 
 console.log('route.params.noteId as unknown as string', route.params.noteId as unknown as string)
-loadNotebookAndPage(notebookId.value!, subNoteId.value)
+if (notebookId.value) {
+  loadNotebookAndPage(notebookId.value, subNoteId.value)
+}
 
 watchEffect(async () => {
   if (!notebookId.value) {
@@ -240,29 +246,36 @@ const saveWork = async () => {
   console.log('saving note in tabset', notebookId.value, subNote.value?.id)
 
   const outputData: OutputData = await editorJS2.save()
+  console.log('outputdata', outputData)
 
-  const subpage = executeOnSubPage(subNote.value?.id, (parent: Notebook | NotesPage, p: NotesPage) => p)
-  if (subpage) {
-    subpage.content = outputData
-    if (subpage.content && subpage.content.blocks.length > 0) {
-      if (subpage.content.blocks[0]!.type === 'header') {
-        subpage.title = sanitize(subpage.content.blocks[0]!.data.text)
-      }
-    }
-  }
+  // const subpage = executeOnSubPage(subNote.value?.id, (parent: Notebook | NotesPage, p: NotesPage) => p)
+  // if (subpage) {
+  //   subpage.content = outputData
+  //   if (subpage.content && subpage.content.blocks.length > 0) {
+  //     if (subpage.content.blocks[0]!.type === 'header') {
+  //       subpage.title = sanitize(subpage.content.blocks[0]!.data.text)
+  //     }
+  //   }
+  // }
 
   //console.log("setting original", title.value, sanitize(title.value))
 
-  //const n: Notebook = await useNotesStore().getNotebook(notebookId.value)
-  // if (subNote.value) {
-  //   subNote.value.title = title.value
-  //   subNote.value.content = outputData
-  // } else {
-  //   .title = title.value
-  //   //n.content = outputData
-  //   //notebook.value = n
-  // }
-  await useNotesStore().saveNotebook(notebook.value!)
+  if (!notebook.value) {
+    notebook.value = new Notebook(uid(), tabsetId.value!, NotebookType.TABSET, 'title')
+  } else {
+    notebook.value = await useNotesStore().getNotebook(notebookId.value)
+  }
+
+  if (subNote.value) {
+    subNote.value.title = title.value
+    subNote.value.content = outputData
+  } else {
+    //n.title = title.value
+    //n.content = outputData
+    //notebook.value = n
+  }
+
+  await useNotesStore().saveNotebook(notebook.value)
   sendMsg('note-changed', {})
   dirty.value = false
 }
