@@ -248,20 +248,22 @@ const saveWork = async () => {
   const outputData: OutputData = await editorJS2.save()
   console.log('outputdata', outputData)
 
-  // const subpage = executeOnSubPage(subNote.value?.id, (parent: Notebook | NotesPage, p: NotesPage) => p)
-  // if (subpage) {
-  //   subpage.content = outputData
-  //   if (subpage.content && subpage.content.blocks.length > 0) {
-  //     if (subpage.content.blocks[0]!.type === 'header') {
-  //       subpage.title = sanitize(subpage.content.blocks[0]!.data.text)
-  //     }
-  //   }
-  // }
+  const subpage = executeOnSubPage(subNote.value?.id, (parent: Notebook | NotesPage, p: NotesPage) => p)
+  if (subpage) {
+    subpage.content = outputData
+    if (subpage.content && subpage.content.blocks.length > 0) {
+      if (subpage.content.blocks[0]!.type === 'header') {
+        subpage.title = sanitize(subpage.content.blocks[0]!.data.text)
+      }
+    }
+  }
 
-  //console.log("setting original", title.value, sanitize(title.value))
+  console.log('setting original', title.value, sanitize(title.value))
 
   if (!notebook.value) {
-    notebook.value = new Notebook(uid(), tabsetId.value!, NotebookType.TABSET, 'title')
+    notebook.value = new Notebook(uid(), tabsetId.value!, NotebookType.TABSET, 'title', [
+      new NotesPage(uid(), 'title', outputData),
+    ])
   } else {
     notebook.value = await useNotesStore().getNotebook(notebookId.value)
   }
