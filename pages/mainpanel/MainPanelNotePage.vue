@@ -73,6 +73,7 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import '@he-tree/vue/style/default.css'
 import _ from 'lodash'
 import { Notebook, NotebookType } from 'src/notes/models/Notebook'
+import useMainPanelNotePage from 'src/notes/pages/mainpanel/mainPanelNotePage'
 
 const { sendMsg, sanitize } = useUtils()
 
@@ -94,37 +95,7 @@ const treeData = ref<object[]>()
 
 let editorJS2: EditorJS = undefined as unknown as EditorJS
 
-function treeNodeFromNote(n: NotesPage): object {
-  return {
-    text: n.title,
-    id: n.id,
-    url: chrome.runtime.getURL(`/www/index.html#/mainpanel/notes/${n.id}`),
-    children: _.map(n.subPages, (subNote: NotesPage) => {
-      return treeNodeFromNote(subNote)
-    }),
-  }
-}
-
-function executeOnSubPage(
-  subPageId: string | undefined,
-  fnc: (parent: Notebook | NotesPage, p: NotesPage) => NotesPage,
-  tree: { parent: Notebook | NotesPage; pages: NotesPage[] } = {
-    parent: notebook.value!,
-    pages: notebook.value?.subPages ? notebook.value!.subPages : [],
-  },
-): NotesPage | undefined {
-  for (const sn of tree.pages) {
-    if (sn.id === subPageId) {
-      return fnc(tree.parent, sn)
-    }
-    const found = executeOnSubPage(subPageId, fnc, { parent: sn, pages: sn.subPages })
-    if (found) {
-      return found
-    }
-  }
-  console.log('not found')
-  return undefined
-}
+const { treeNodeFromNote, executeOnSubPage } = useMainPanelNotePage()
 
 watchEffect(async () => {
   if (notebook.value) {
@@ -170,7 +141,7 @@ const loadNotebookAndPage = (notebookId: string, subNoteId: string | undefined) 
         editorJS2 = new EditorJS({
           holder: 'editorjs',
           readOnly: !editMode.value,
-          data: (subNote.value!.content || { blocks: [] }) as OutputData,
+          data: (subNote.value?.content || { blocks: [] }) as OutputData,
           tools: useSettingsStore().isEnabled('localMode')
             ? EditorJsConfig.toolsconfigLocal
             : EditorJsConfig.toolsconfig,
@@ -187,7 +158,6 @@ const loadNotebookAndPage = (notebookId: string, subNoteId: string | undefined) 
     })
 }
 
-console.log('route.params.noteId as unknown as string', route.params.noteId as unknown as string)
 if (notebookId.value) {
   loadNotebookAndPage(notebookId.value, subNoteId.value)
 }
@@ -218,7 +188,7 @@ const newPage = async () => {
 }
 
 const newSubPage = async () => {
-  executeOnSubPage(subNote.value?.id, (parent: Notebook | NotesPage, p: NotesPage) => {
+  executeOnSubPage(subNote.value?.id, notebook.value, (parent: Notebook | NotesPage, p: NotesPage) => {
     p.subPages.push(
       new NotesPage(uid(), 'subpage', {
         blocks: [
@@ -235,7 +205,7 @@ const newSubPage = async () => {
 }
 
 const deletePage = async () => {
-  executeOnSubPage(subNote.value?.id, (parent: Notebook | NotesPage, p: NotesPage) => {
+  executeOnSubPage(subNote.value?.id, notebook.value, (parent: Notebook | NotesPage, p: NotesPage) => {
     parent.subPages = _.filter(parent.subPages, (sp: NotesPage) => sp.id !== subNote.value?.id)
     return p
   })
@@ -243,12 +213,13 @@ const deletePage = async () => {
 }
 
 const saveWork = async () => {
-  console.log('saving note in tabset', notebookId.value, subNote.value?.id)
+  console.log('saving note in tabset', notebookId.value, subNote.value?.id, notebook.value)
 
   const outputData: OutputData = await editorJS2.save()
   console.log('outputdata', outputData)
 
-  const subpage = executeOnSubPage(subNote.value?.id, (parent: Notebook | NotesPage, p: NotesPage) => p)
+  const subpage = executeOnSubPage(subNote.value?.id, notebook.value, (parent: Notebook | NotesPage, p: NotesPage) => p)
+  console.log('found subpage', subpage)
   if (subpage) {
     subpage.content = outputData
     if (subpage.content && subpage.content.blocks.length > 0) {
@@ -265,7 +236,7 @@ const saveWork = async () => {
       new NotesPage(uid(), 'title', outputData),
     ])
   } else {
-    notebook.value = await useNotesStore().getNotebook(notebookId.value)
+    //notebook.value = await useNotesStore().getNotebook(notebookId.value)
   }
 
   if (subNote.value) {
@@ -307,8 +278,7 @@ const openSubNote = (n: { text: string; id: string; url: string; children: objec
 const getSubNote = (snId: string | undefined): NotesPage | undefined => {
   if (snId) {
     console.log('got subNoteId', snId)
-    const subPage = executeOnSubPage(snId, (parent: Notebook | NotesPage, p: NotesPage) => p)
-    return subPage // findSubPage(notebook.value!.subPages, snId)
+    return executeOnSubPage(snId, notebook.value, (parent: Notebook | NotesPage, p: NotesPage) => p)
   }
   return undefined
 }

@@ -34,7 +34,7 @@ import { PropType, ref, watchEffect } from 'vue'
 import '@he-tree/vue/style/default.css'
 import '@he-tree/vue/style/material-design.css'
 import _ from 'lodash'
-import NavigationService from 'src/services/NavigationService'
+import { useNavigationService } from 'src/core/services/NavigationService'
 
 const props = defineProps({
   tabset: { type: Object as PropType<Tabset>, required: true },
@@ -61,5 +61,5 @@ watchEffect(async () => {
 })
 
 const openNote = (n: NotesPage) =>
-  NavigationService.openOrCreateTab([chrome.runtime.getURL(`/www/index.html#/mainpanel/notes/${n.id}`)])
+  useNavigationService().browserTabFor(chrome.runtime.getURL(`/www/index.html#/mainpanel/notes/${n.id}`))
 </script>

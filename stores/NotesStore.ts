@@ -20,6 +20,10 @@ export const useNotesStore = defineStore('notes', () => {
     return storage.saveNotebook(notebook)
   }
 
+  // async function getNotes(): Promise<NotesPage[]> {
+  //   return storage.getNotes()
+  // }
+
   async function getNotesFor(sourceId: string) {
     //console.log('getting notes for ', storage, sourceId)
     if (storage) {
@@ -48,5 +52,6 @@ export const useNotesStore = defineStore('notes', () => {
     getNotebook,
     deleteNote,
     getNotebookList,
+    // getNotes,
   }
 })
