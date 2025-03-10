@@ -74,6 +74,7 @@ import '@he-tree/vue/style/default.css'
 import _ from 'lodash'
 import { Notebook, NotebookType } from 'src/notes/models/Notebook'
 import useMainPanelNotePage from 'src/notes/pages/mainpanel/mainPanelNotePage'
+import useNotesServices from 'src/notes/services/notesServices'
 
 const { sendMsg, sanitize } = useUtils()
 
@@ -95,6 +96,7 @@ const treeData = ref<object[]>()
 
 let editorJS2: EditorJS = undefined as unknown as EditorJS
 
+const { loadNotebookAndPage, getSubNote } = useNotesServices()
 const { treeNodeFromNote, executeOnSubPage } = useMainPanelNotePage()
 
 watchEffect(async () => {
@@ -119,48 +121,28 @@ onMounted(() => {
 
 watchEffect(() => (dirty.value = editMode.value && dirty.value))
 
-const loadNotebookAndPage = (notebookId: string, subNoteId: string | undefined) => {
-  useNotesStore()
-    .getNotebook(notebookId)
-    .then((n: Notebook) => {
-      console.log('got noteId', n)
-      if (subNoteId) {
-        subNote.value = getSubNote(subNoteId)
-        console.log('got subnote from ', subNoteId, subNote.value)
-      } else {
-        subNote.value = n.subPages[0]
-        console.log('got first entry', n.subPages, subNote.value)
+watchEffect(async () => {
+  if (useNotesStore().loaded) {
+    const res = await loadNotebookAndPage(notebookId.value, subNoteId.value)
+    notebook.value = res.nb
+    title.value = res.title
+    subNote.value = res.subNote
+
+    if (!editorJS2) {
+      console.log('hier', useSettingsStore().isEnabled('localMode'))
+      editorJS2 = new EditorJS({
+        holder: 'editorjs',
+        readOnly: !editMode.value,
+        data: (subNote.value?.content || { blocks: [] }) as OutputData,
+        tools: useSettingsStore().isEnabled('localMode') ? EditorJsConfig.toolsconfigLocal : EditorJsConfig.toolsconfig,
+      })
+    } else {
+      if (editorJS2 && editorJS2.readOnly) {
+        editorJS2.readOnly.toggle(!editMode.value)
       }
-
-      notebook.value = n
-      //tabset.value = useTabsetsStore().getTabset(n.sourceId) as Tabset | undefined
-      title.value = subNote.value?.title || 'unknown'
-
-      if (!editorJS2) {
-        console.log('hier', useSettingsStore().isEnabled('localMode'))
-        editorJS2 = new EditorJS({
-          holder: 'editorjs',
-          readOnly: !editMode.value,
-          data: (subNote.value?.content || { blocks: [] }) as OutputData,
-          tools: useSettingsStore().isEnabled('localMode')
-            ? EditorJsConfig.toolsconfigLocal
-            : EditorJsConfig.toolsconfig,
-        })
-      } else {
-        if (editorJS2 && editorJS2.readOnly) {
-          editorJS2.readOnly.toggle(!editMode.value)
-        }
-      }
-    })
-    .catch((err: any) => {
-      console.log('db not ready yet, reloading...', err)
-      setTimeout(() => loadNotebookAndPage(notebookId, subNoteId), 500)
-    })
-}
-
-if (notebookId.value) {
-  loadNotebookAndPage(notebookId.value, subNoteId.value)
-}
+    }
+  }
+})
 
 watchEffect(async () => {
   if (!notebookId.value) {
@@ -265,7 +247,7 @@ const keyUpEvent = () => {
 
 const openSubNote = (n: { text: string; id: string; url: string; children: object[] }) => {
   subNoteId.value = n.id
-  subNote.value = getSubNote(n.id)
+  subNote.value = getSubNote(n.id, notebook.value)
   if (subNote.value) {
     var newContent = (subNote.value.content || { blocks: [] }) as OutputData
     console.log('newContent', newContent)
@@ -273,14 +255,6 @@ const openSubNote = (n: { text: string; id: string; url: string; children: objec
     title.value = subNote.value.title
     editorJS2.render(newContent)
   }
-}
-
-const getSubNote = (snId: string | undefined): NotesPage | undefined => {
-  if (snId) {
-    console.log('got subNoteId', snId)
-    return executeOnSubPage(snId, notebook.value, (parent: Notebook | NotesPage, p: NotesPage) => p)
-  }
-  return undefined
 }
 
 const setNotebookTitle = (newTitle: string) => {

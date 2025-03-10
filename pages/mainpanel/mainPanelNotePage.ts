@@ -7,7 +7,8 @@ export default function useMainPanelNotePage() {
     return {
       text: n.title,
       id: n.id,
-      url: chrome.runtime.getURL(`/www/index.html#/mainpanel/notes/${n.id}`),
+      url:
+        chrome && chrome.runtime ? chrome.runtime.getURL(`/www/index.html#/mainpanel/notes/${n.id}`) : `/xxx/${n.id}`,
       children: _.map(n.subPages, (subNote: NotesPage) => {
         return treeNodeFromNote(subNote)
       }),

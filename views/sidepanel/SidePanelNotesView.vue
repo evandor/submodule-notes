@@ -35,6 +35,12 @@ import '@he-tree/vue/style/default.css'
 import '@he-tree/vue/style/material-design.css'
 import _ from 'lodash'
 import { useNavigationService } from 'src/core/services/NavigationService'
+import { useUtils } from 'src/core/services/Utils'
+import { useRouter } from 'vue-router'
+
+const { inBexMode } = useUtils()
+
+const router = useRouter()
 
 const props = defineProps({
   tabset: { type: Object as PropType<Tabset>, required: true },
@@ -46,7 +52,7 @@ const treeData = ref<object[]>()
 function treeNodeFromNote(n: NotesPage): object {
   return {
     text: n.title,
-    url: chrome.runtime.getURL(`/www/index.html#/mainpanel/notes/${n.id}`),
+    url: chrome.runtime ? chrome.runtime.getURL(`/www/index.html#/mainpanel/notes/${n.id}`) : 'https://skysail.io',
     children: _.map(n.subPages, (subNote: NotesPage) => {
       return treeNodeFromNote(subNote)
     }),
@@ -55,11 +61,18 @@ function treeNodeFromNote(n: NotesPage): object {
 
 watchEffect(async () => {
   notes.value = await useNotesStore().getNotesFor(props.tabset.id)
+  console.log(`got notes from ${props.tabset.id}`, notes.value.length)
   treeData.value = _.map(notes.value, (n: NotesPage) => {
     return treeNodeFromNote(n)
   })
 })
 
-const openNote = (n: NotesPage) =>
-  useNavigationService().browserTabFor(chrome.runtime.getURL(`/www/index.html#/mainpanel/notes/${n.id}`))
+const openNote = (n: NotesPage) => {
+  if (inBexMode()) {
+    useNavigationService().browserTabFor(chrome.runtime.getURL(`/www/index.html#/mainpanel/notes/${n.id}`))
+  } else {
+    //useUiStore().setActiveTab(undefined)
+    router.push(`/p/notes/${n.id}`)
+  }
+}
 </script>

@@ -1,13 +1,45 @@
 // @ts-expect-error TODO
 import editorjsColumns from '@calumk/editorjs-columns'
 import EditorJS from '@editorjs/editorjs'
-import { ToolConstructable, ToolSettings } from '@editorjs/editorjs/types/tools'
 import Header from '@editorjs/header'
+import ImageTool from '@editorjs/image'
+import Table from '@editorjs/table'
 // @ts-expect-error TODO
 import ColorPlugin from 'editorjs-text-color-plugin'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { uid } from 'quasar'
 import { LinkTool2 } from 'src/notes/editorjs/linkTool'
+import FirebaseServices from 'src/services/firebase/FirebaseServices'
+import { useAuthStore } from 'stores/authStore'
 
 class EditorJsConfig {
+  private imageConfig = {
+    class: ImageTool,
+    config: {
+      uploader: {
+        // https://stackoverflow.com/questions/63610441/how-to-upload-image-to-firebase-storage-for-editor-js
+        async uploadByFile(file: any) {
+          console.log('got file', file)
+          const storageRef = ref(
+            FirebaseServices.getStorage(),
+            `users/${useAuthStore().user.uid}/notes/images/${uid()}`,
+          )
+          const sn = await uploadBytes(storageRef, file)
+          const downloadUrl = await getDownloadURL(sn.ref)
+          console.log('Uploaded successfully!', sn, downloadUrl)
+          return {
+            success: 1,
+            file: {
+              url: downloadUrl,
+            },
+          }
+        },
+
+        uploadByUrl(url: string) {},
+      },
+    },
+  }
+
   column_tools = {
     header: Header,
     linkTool2: {
@@ -23,11 +55,11 @@ class EditorJsConfig {
 
   toolsconfigLocal = {}
 
-  toolsconfig: {
-    [toolName: string]: ToolConstructable | ToolSettings
-  } = {
+  toolsconfig = {
+    //   [toolName: string]: ToolConstructable | ToolSettings
+    // } = {
     header: {
-      //class: Header,
+      class: Header,
       //         shortcut: "CMD+SHIFT+H"
     },
     // quote: {
@@ -40,13 +72,13 @@ class EditorJsConfig {
     //     }
     // },
     linkTool2: {
-      //class: LinkTool2,
+      class: LinkTool2,
       config: {
         endpoint: `/www/editor.html`, // Your backend endpoint for url data fetching,
       },
     },
     table: {
-      // class: Table,
+      class: Table,
       inlineToolbar: true,
       config: {
         rows: 2,
@@ -61,6 +93,7 @@ class EditorJsConfig {
       },
     },
     //      alert: Alert,
+    image: this.imageConfig,
     Color: {
       class: ColorPlugin, // if load from CDN, please try: window.ColorPlugin
       config: {
