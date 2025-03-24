@@ -8,12 +8,15 @@ export const useNotesStore = defineStore('notes', () => {
 
   const lastUpdate = ref(0)
 
+  let loaded = ref(false)
+
   async function initialize(ps: NotesPersistence) {
     storage = ps
     await storage.init()
     //metadata.value = await storage.getMetadata()
     lastUpdate.value = new Date().getTime()
     // console.debug(' ...initialized notes: Store', '✅')
+    loaded.value = true
   }
 
   async function saveNotebook(notebook: Notebook) {
@@ -46,6 +49,7 @@ export const useNotesStore = defineStore('notes', () => {
 
   return {
     initialize,
+    loaded,
     lastUpdate,
     saveNotebook,
     getNotesFor,
