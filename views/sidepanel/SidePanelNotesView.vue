@@ -61,7 +61,7 @@ function treeNodeFromNote(n: NotesPage): object {
 
 watchEffect(async () => {
   notes.value = await useNotesStore().getNotesFor(props.tabset.id)
-  console.log(`got notes from ${props.tabset.id}`, notes.value.length)
+  //  console.log(`got notes from ${props.tabset.id}`, notes.value.length)
   treeData.value = _.map(notes.value, (n: NotesPage) => {
     return treeNodeFromNote(n)
   })

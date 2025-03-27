@@ -62,7 +62,7 @@ class IndexedDbNotesPersistence extends NotesPersistence {
   }
 
   async saveNotebook(notebook: Notebook): Promise<any> {
-    console.log('saving notebook', notebook)
+    //console.log('saving notebook', notebook)
     return await this.db.put(this.STORE_IDENT, JSON.parse(JSON.stringify(notebook)), notebook.id)
   }
 }
