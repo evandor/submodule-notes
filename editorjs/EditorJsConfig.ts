@@ -1,16 +1,18 @@
+;
 // @ts-expect-error TODO
-import editorjsColumns from '@calumk/editorjs-columns'
-import EditorJS from '@editorjs/editorjs'
-import Header from '@editorjs/header'
-import ImageTool from '@editorjs/image'
-import Table from '@editorjs/table'
+import editorjsColumns from '@calumk/editorjs-columns';
+import EditorJS from '@editorjs/editorjs';
+import Header from '@editorjs/header';
+import ImageTool from '@editorjs/image';
+import Table from '@editorjs/table';
 // @ts-expect-error TODO
-import ColorPlugin from 'editorjs-text-color-plugin'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import { uid } from 'quasar'
-import { LinkTool2 } from 'src/notes/editorjs/linkTool'
-import FirebaseServices from 'src/services/firebase/FirebaseServices'
-import { useAuthStore } from 'stores/authStore'
+import ColorPlugin from 'editorjs-text-color-plugin';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { uid } from 'quasar';
+import { LinkTool2 } from 'src/notes/editorjs/linkTool';
+import FirebaseServices from 'src/services/firebase/FirebaseServices';
+import { useAuthStore } from 'stores/authStore';
+
 
 class EditorJsConfig {
   private imageConfig = {
@@ -56,8 +58,6 @@ class EditorJsConfig {
   toolsconfigLocal = {}
 
   toolsconfig = {
-    //   [toolName: string]: ToolConstructable | ToolSettings
-    // } = {
     header: {
       class: Header,
       //         shortcut: "CMD+SHIFT+H"
