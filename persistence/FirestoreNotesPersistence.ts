@@ -37,7 +37,7 @@ class FirestoreNotesPersistence extends NotesPersistence {
 
   async getNotesForSourceId(sourceId: string): Promise<NotesPage[]> {
     const sharedById = useTabsetsStore().getTabset(sourceId)?.sharing.sharedById
-    const userId: string = sharedById ? sharedById : useAuthStore().user.uid
+    const userId: string = sharedById ? sharedById : useAuthStore().user?.uid
     const res: NotesPage[] = []
     const cr = collection(FirebaseServices.getFirestore(), `users/${userId}/${STORE_IDENT}`)
     const r = query(cr, where('sourceId', '==', sourceId))
