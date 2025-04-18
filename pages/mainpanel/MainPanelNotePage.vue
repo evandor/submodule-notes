@@ -67,9 +67,9 @@ import { onMounted, ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import '../../editorjs/linkTool.css'
 import { Draggable, OpenIcon } from '@he-tree/vue'
+import { useSettingsStore } from 'src/core/stores/settingsStore'
 import { NotesPage } from 'src/notes/models/NotesPage'
 import { useNotesStore } from 'src/notes/stores/NotesStore'
-import { useSettingsStore } from 'src/core/stores/settingsStore'
 import '@he-tree/vue/style/default.css'
 import _ from 'lodash'
 import { Notebook, NotebookType } from 'src/notes/models/Notebook'
@@ -97,7 +97,7 @@ let editorJS2: EditorJS = undefined as unknown as EditorJS
 
 const { treeNodeFromNote, executeOnSubPage } = useMainPanelNotePage()
 
-watchEffect(async () => {
+watchEffect(() => {
   if (notebook.value) {
     treeData.value = _.map(notebook.value.subPages, (n: NotesPage) => {
       return treeNodeFromNote(n)
@@ -162,7 +162,7 @@ if (notebookId.value) {
   loadNotebookAndPage(notebookId.value, subNoteId.value)
 }
 
-watchEffect(async () => {
+watchEffect(() => {
   if (!notebookId.value) {
     console.log('new Note')
 

@@ -59,6 +59,7 @@ function treeNodeFromNote(n: NotesPage): object {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 watchEffect(async () => {
   notes.value = await useNotesStore().getNotesFor(props.tabset.id)
   //  console.log(`got notes from ${props.tabset.id}`, notes.value.length)
