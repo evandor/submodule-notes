@@ -121,6 +121,7 @@ onMounted(() => {
 
 watchEffect(() => (dirty.value = editMode.value && dirty.value))
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 watchEffect(async () => {
   if (useNotesStore().loaded) {
     const res = await loadNotebookAndPage(notebookId.value, subNoteId.value)
