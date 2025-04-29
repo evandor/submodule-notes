@@ -21,7 +21,7 @@ export default function useMainPanelNotePage() {
     fnc: (parent: Notebook | NotesPage, p: NotesPage) => NotesPage,
     tree: { parent: Notebook | NotesPage; pages: NotesPage[] } = {
       parent: notebook!,
-      pages: notebook?.subPages ? notebook!.subPages : [],
+      pages: notebook?.subPages ? notebook.subPages : [],
     },
   ): NotesPage | undefined => {
     for (const sn of tree.pages) {
